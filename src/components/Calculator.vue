@@ -15,11 +15,11 @@ const presion_final = computed(() =>
 )
 
 const diferencia_temperatura = computed(() =>
-  temperatura_inicial.value - temperatura_final.value
+  temperatura_final.value - temperatura_inicial.value
 )
 
 const diferencia_presion = computed(() =>
-  presion_inicial.value - presion_final.value
+  presion_final.value - presion_inicial.value
 )
 </script>
 
