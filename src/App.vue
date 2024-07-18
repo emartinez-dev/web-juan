@@ -5,6 +5,7 @@ import Calculator from "./components/Calculator.vue";
   <div>
     <main>
       <div class="calculator-heading">
+        <img src="/Imagen2.png" alt="" width="150" height="150">
         <h1>Calculadora Ley de Gay-Lussac</h1>
       </div>
       <Calculator />
@@ -20,7 +21,7 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
   max-width: 820px;
   margin: auto;
 }
@@ -28,11 +29,11 @@ main {
 .calculator-heading {
   text-align: center;
   padding: 0 4rem;
-  font-size: 1.1rem;
 }
 
 h1 {
   color: black;
   font-weight: bold;
+  font-size: 1.2rem;
 }
 </style>
