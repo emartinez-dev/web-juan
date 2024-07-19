@@ -27,7 +27,7 @@ const diferencia_presion = computed(() =>
   <div class="datos-calculo">
     <div class="tarjetas">
       <Card class="card" :pt="{ root: { id: 'calc-card' } }">
-        <template #title>Datos iniciales</template>
+        <template #title>Datos iniciales - Nitrógeno seco N2</template>
         <template #content>
           <label for="presion_inicial">Presión Inicial</label>
           <InputNumber id="presion_inicial" v-model="presion_inicial" suffix=" Bar." fluid></InputNumber>
