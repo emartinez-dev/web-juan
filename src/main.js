@@ -1,6 +1,6 @@
 import PrimeVue from 'primevue/config'
 import { createApp } from 'vue'
-import { createMemoryHistory, createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 
 import App from './App.vue'
 

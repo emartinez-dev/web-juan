@@ -1,39 +1,30 @@
 <script setup>
-import Calculator from "./components/Calculator.vue";
+const year = new Date().getFullYear()
 </script>
 <template>
-  <div>
-    <main>
-      <div class="calculator-heading">
-        <img src="/Imagen2.png" alt="" width="150" height="150">
-        <h1>Calculadora Ley de Gay-Lussac</h1>
+  <main class="min-h-screen flex flex-col">
+    <nav class="bg-primary-900 shadow-sm">
+      <div class="max-w-7xl mx-auto lg:mx-4 px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center sm:justify-between justify-start h-16">
+          <div class="flex items-center space-x-3">
+            <img
+              src="/Imagen2.png"
+              alt="Logo Frikigoristas"
+              class="w-12 h-12 rounded-full"
+              @click="$router.push('/')"
+            />
+            <span class="text-xl font-semibold text-gray-100">Frikigoristas</span>
+          </div>
+        </div>
       </div>
-      <Calculator />
-      <div class="footer">
-        <p>Hecho por Enrique para mi primo Juan © 2024</p>
-      </div>
-    </main>
-  </div>
+    </nav>
+    <div class="p-6 max-w-screen-xl m-auto flex-1">
+      <RouterView />
+    </div>
+  </main>
 </template>
 <style #scoped>
-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  max-width: 820px;
-  margin: auto;
-}
-
-.calculator-heading {
-  text-align: center;
-  padding: 0 4rem;
-}
-
-h1 {
-  color: black;
-  font-weight: bold;
-  font-size: 1.2rem;
+body {
+  @apply h-full min-w-full bg-surface-100 dark:bg-surface-950;
 }
 </style>
