@@ -5,7 +5,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
 
 import CalculatorsView from '@/views/CalculatorsView.vue'
-import GayLussac from '@/components/GayLussac.vue'
+import GayLussac from '@/components/calculators/GayLussac.vue'
 
 import './assets/tailwind.css'
 import './style.css'
