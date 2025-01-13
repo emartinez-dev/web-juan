@@ -125,7 +125,7 @@ async function calcularToneladasCO2(kg_refrigerante, tipo_refrigerante) {
               a
             </p>
             <p>
-              <b>{{ resultado_co2.toFixed(2) }}</b> toneladas de CO₂
+              <b>{{ resultado_co2.toFixed(3) }}</b> toneladas de CO₂
             </p>
           </div>
         </template>
