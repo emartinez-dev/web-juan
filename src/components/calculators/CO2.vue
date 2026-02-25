@@ -1,8 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import CalculatorLayout from '@/components/CalculatorLayout.vue'
-import Button from 'primevue/button'
 import Card from 'primevue/card'
 import FloatLabel from 'primevue/floatlabel'
 import InputGroup from 'primevue/inputgroup'
@@ -12,8 +11,6 @@ import Select from 'primevue/select'
 
 const kg_refrigerante = ref(undefined)
 const tipo_refrigerante = ref(undefined)
-const resultado_co2 = ref(undefined)
-const nombre_refrigerante_elegido = ref()
 
 const refrigerantes = [
   { name: 'R-22', value: 1.81 },
@@ -49,16 +46,16 @@ const refrigerantes = [
   { name: 'R-290 (Propano)', value: 0.003 },
   { name: 'R-600a (Butano)', value: 0.004 },
   { name: 'R-717 (Amoniaco)', value: 0.0 },
-  { name: 'R-744 (CO2)', value: 0.0 }
+  { name: 'R-744 (CO2)', value: 0.0 },
 ]
 
-function calcularToneladasCO2(kgRef, tipoRef) {
-  nombre_refrigerante_elegido.value = undefined
-  resultado_co2.value = undefined
-
-  nombre_refrigerante_elegido.value = tipoRef.name
-  resultado_co2.value = kgRef * tipoRef.value
-}
+const result = computed(() => {
+  if (kg_refrigerante.value == null || tipo_refrigerante.value == null) return null
+  return {
+    nombre: tipo_refrigerante.value.name,
+    toneladas: kg_refrigerante.value * tipo_refrigerante.value.value,
+  }
+})
 </script>
 
 <template>
@@ -91,10 +88,6 @@ function calcularToneladasCO2(kgRef, tipoRef) {
                 <label for="tipo_refrigerante">Refrigerante</label>
               </FloatLabel>
             </InputGroup>
-            <Button
-              label="Calcular"
-              @click="calcularToneladasCO2(kg_refrigerante, tipo_refrigerante)"
-            />
           </div>
         </template>
       </Card>
@@ -103,17 +96,25 @@ function calcularToneladasCO2(kgRef, tipoRef) {
       <Card class="min-h-full flex flex-col">
         <template #title>Resultado</template>
         <template #content>
-          <div
-            v-if="!isNaN(resultado_co2)"
-            class="min-h-full flex flex-col justify-evenly max-w-sm text-center mx-6"
-          >
-            <p>
-              {{ kg_refrigerante }} kg del refrigerante {{ nombre_refrigerante_elegido }} equivalen a
-            </p>
-            <p><b>{{ resultado_co2.toFixed(3) }}</b> toneladas de CO₂</p>
+          <div class="flex flex-col justify-center items-center h-full gap-4 text-center">
+            <template v-if="result">
+              <p>{{ kg_refrigerante }} kg del refrigerante {{ result.nombre }} equivalen a</p>
+              <p class="text-2xl"><b>{{ result.toneladas.toFixed(3) }}</b> toneladas de CO₂</p>
+            </template>
+            <p v-else class="text-surface-400 text-sm">Selecciona un refrigerante e introduce el peso para ver el resultado.</p>
           </div>
         </template>
       </Card>
     </template>
   </CalculatorLayout>
 </template>
+
+<style scoped>
+@reference "../../assets/tailwind.css";
+:deep(.p-card-body) {
+  @apply flex flex-col h-full;
+}
+:deep(.p-card-content) {
+  @apply flex-1;
+}
+</style>

@@ -1,8 +1,7 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 import CalculatorLayout from '@/components/CalculatorLayout.vue'
-import Button from 'primevue/button'
 import Card from 'primevue/card'
 import FloatLabel from 'primevue/floatlabel'
 import InputGroup from 'primevue/inputgroup'
@@ -15,20 +14,24 @@ const presion_inicial = ref(undefined)
 const temperatura_inicial = ref(undefined)
 const temperatura_final = ref(undefined)
 
-const presion_final = ref(undefined)
-const diferencia_temperatura = ref(undefined)
-const diferencia_presion = ref(undefined)
+const result = computed(() => {
+  if (
+    presion_inicial.value == null ||
+    temperatura_inicial.value == null ||
+    temperatura_final.value == null
+  )
+    return null
 
-function calcularPresionFinal(presionInicial, temperaturaInicial, temperaturaFinal) {
-  presion_final.value = undefined
-  diferencia_temperatura.value = undefined
-  diferencia_presion.value = undefined
+  const presion_final =
+    (presion_inicial.value * (temperatura_final.value + KELVIN_OFFSET)) /
+    (temperatura_inicial.value + KELVIN_OFFSET)
 
-  presion_final.value =
-    (presionInicial * (temperaturaFinal + KELVIN_OFFSET)) / (temperaturaInicial + KELVIN_OFFSET)
-  diferencia_temperatura.value = temperaturaFinal - temperaturaInicial
-  diferencia_presion.value = presion_final.value - presionInicial
-}
+  return {
+    presion_final,
+    diferencia_temperatura: temperatura_final.value - temperatura_inicial.value,
+    diferencia_presion: presion_final - presion_inicial.value,
+  }
+})
 </script>
 
 <template>
@@ -62,12 +65,6 @@ function calcularPresionFinal(presionInicial, temperaturaInicial, temperaturaFin
               </FloatLabel>
               <InputGroupAddon class="min-w-20">ºC</InputGroupAddon>
             </InputGroup>
-            <Button
-              label="Calcular"
-              @click="
-                calcularPresionFinal(presion_inicial, temperatura_inicial, temperatura_final)
-              "
-            />
           </div>
         </template>
       </Card>
@@ -76,13 +73,26 @@ function calcularPresionFinal(presionInicial, temperaturaInicial, temperaturaFin
       <Card class="min-h-full flex flex-col">
         <template #title>Resultado</template>
         <template #content>
-          <div v-if="!isNaN(presion_final)" class="min-h-full flex flex-col justify-around gap-3">
-            <div>Presión final: <b>{{ presion_final.toFixed(2) }} Bar</b></div>
-            <div>Diferencia de temperatura: <b>{{ diferencia_temperatura.toFixed(2) }} ºC</b></div>
-            <div>Diferencia de presión: <b>{{ diferencia_presion.toFixed(2) }} Bar</b></div>
+          <div class="flex flex-col justify-center h-full gap-3">
+            <template v-if="result">
+              <div>Presión final: <b>{{ result.presion_final.toFixed(2) }} Bar</b></div>
+              <div>Diferencia de temperatura: <b>{{ result.diferencia_temperatura.toFixed(2) }} ºC</b></div>
+              <div>Diferencia de presión: <b>{{ result.diferencia_presion.toFixed(2) }} Bar</b></div>
+            </template>
+            <p v-else class="text-surface-400 text-sm">Introduce los tres valores para ver el resultado.</p>
           </div>
         </template>
       </Card>
     </template>
   </CalculatorLayout>
 </template>
+
+<style scoped>
+@reference "../../assets/tailwind.css";
+:deep(.p-card-body) {
+  @apply flex flex-col h-full;
+}
+:deep(.p-card-content) {
+  @apply flex-1;
+}
+</style>
