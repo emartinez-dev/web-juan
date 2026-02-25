@@ -1,15 +1,15 @@
 <script setup>
 import { ref } from 'vue'
 
+import CalculatorLayout from '@/components/CalculatorLayout.vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import FloatLabel from 'primevue/floatlabel'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import InputNumber from 'primevue/inputnumber'
-import ProgressSpinner from 'primevue/progressspinner'
 
-const fahrenheit = 273.15
+const KELVIN_OFFSET = 273.15
 
 const presion_inicial = ref(undefined)
 const temperatura_inicial = ref(undefined)
@@ -19,36 +19,26 @@ const presion_final = ref(undefined)
 const diferencia_temperatura = ref(undefined)
 const diferencia_presion = ref(undefined)
 
-const loading = ref(false)
-
-function resetResultados() {
+function calcularPresionFinal(presionInicial, temperaturaInicial, temperaturaFinal) {
   presion_final.value = undefined
   diferencia_temperatura.value = undefined
   diferencia_presion.value = undefined
-}
 
-async function calcularPresionFinal(presionInicial, temperaturaInicial, temperaturaFinal) {
-  resetResultados()
-  loading.value = true
-  await new Promise(r => setTimeout(r, 1000));
-
-  presion_final.value = (presionInicial * (temperaturaFinal + fahrenheit))
-                        / (temperaturaInicial + fahrenheit)
-  diferencia_temperatura.value = temperatura_final.value - temperatura_inicial.value
+  presion_final.value =
+    (presionInicial * (temperaturaFinal + KELVIN_OFFSET)) / (temperaturaInicial + KELVIN_OFFSET)
+  diferencia_temperatura.value = temperaturaFinal - temperaturaInicial
   diferencia_presion.value = presion_final.value - presionInicial
-
-  loading.value = false
 }
 </script>
 
 <template>
-  <div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      <Card
-        class="min-h-full flex flex-col"
-        :pt="{ body: { class: 'min-h-full' }, content: { class: 'flex-1' } }"
-      >
-        <template #title>Datos iniciales - Nitrógeno seco N2</template>
+  <CalculatorLayout
+    title="Ley Gay-Lussac"
+    subtitle="Relación entre presión y temperatura de un gas ideal (volumen constante)"
+  >
+    <template #inputs>
+      <Card class="min-h-full flex flex-col">
+        <template #title>Datos iniciales - Nitrógeno seco N₂</template>
         <template #content>
           <div class="grid grid-cols-1 gap-3 mt-3">
             <InputGroup>
@@ -74,34 +64,25 @@ async function calcularPresionFinal(presionInicial, temperaturaInicial, temperat
             </InputGroup>
             <Button
               label="Calcular"
-              @click="calcularPresionFinal(presion_inicial, temperatura_inicial, temperatura_final)"
+              @click="
+                calcularPresionFinal(presion_inicial, temperatura_inicial, temperatura_final)
+              "
             />
           </div>
         </template>
       </Card>
-      <Card
-        class="min-h-full flex flex-col"
-        :pt="{ body: { class: 'min-h-full' }, content: { class: 'flex-1' } }"
-      >
+    </template>
+    <template #results>
+      <Card class="min-h-full flex flex-col">
         <template #title>Resultado</template>
         <template #content>
-          <ProgressSpinner v-if="loading" class="w-full m-auto min-h-full" />
-          <div v-if="!isNaN(presion_final)" class="min-h-full flex flex-col justify-around">
-            <div>
-              Presión final: <b>{{ presion_final.toFixed(2) }} Bar.</b>
-            </div>
-            <div>
-              Diferencia de temperatura: <b>{{ diferencia_temperatura.toFixed(2) }} ºC.</b>
-            </div>
-            <div>
-              Diferencia de presión: <b>{{ diferencia_presion.toFixed(2) }} Bar.</b>
-            </div>
+          <div v-if="!isNaN(presion_final)" class="min-h-full flex flex-col justify-around gap-3">
+            <div>Presión final: <b>{{ presion_final.toFixed(2) }} Bar</b></div>
+            <div>Diferencia de temperatura: <b>{{ diferencia_temperatura.toFixed(2) }} ºC</b></div>
+            <div>Diferencia de presión: <b>{{ diferencia_presion.toFixed(2) }} Bar</b></div>
           </div>
         </template>
       </Card>
-    </div>
-  </div>
+    </template>
+  </CalculatorLayout>
 </template>
-
-<style></style>
-

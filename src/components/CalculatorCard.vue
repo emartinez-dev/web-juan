@@ -6,19 +6,20 @@ const props = defineProps({
   title: String,
   subtitle: String,
   description: String,
+  imageUrl: String,
   url: String
 })
 </script>
 
 <template>
-  <Card
-    class="min-h-full flex flex-col"
-    :pt="{ body: { class: 'min-h-full' }, content: { class: 'flex-1' } }"
-  >
+  <Card class="h-full cursor-pointer">
+    <template v-if="imageUrl" #header>
+      <img :src="imageUrl" :alt="title" class="w-full h-48 object-cover rounded-t-[6px]" />
+    </template>
     <template #title>{{ title }}</template>
     <template #subtitle>{{ subtitle }}</template>
     <template #content>
-      <p class="m-0 flex-1">{{ description }}</p>
+      <p class="m-0">{{ description }}</p>
     </template>
     <template #footer>
       <div class="flex gap-4 mt-1">
@@ -30,7 +31,10 @@ const props = defineProps({
 
 <style scoped>
 @reference "../assets/tailwind.css";
-.p-card-body {
-  @apply min-h-full;
+:deep(.p-card-body) {
+  @apply flex flex-col h-full;
+}
+:deep(.p-card-content) {
+  @apply flex-1;
 }
 </style>

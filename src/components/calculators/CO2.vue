@@ -1,19 +1,18 @@
 <script setup>
 import { ref } from 'vue'
 
+import CalculatorLayout from '@/components/CalculatorLayout.vue'
 import Button from 'primevue/button'
 import Card from 'primevue/card'
 import FloatLabel from 'primevue/floatlabel'
 import InputGroup from 'primevue/inputgroup'
 import InputGroupAddon from 'primevue/inputgroupaddon'
 import InputNumber from 'primevue/inputnumber'
-import ProgressSpinner from 'primevue/progressspinner'
 import Select from 'primevue/select'
 
 const kg_refrigerante = ref(undefined)
 const tipo_refrigerante = ref(undefined)
 const resultado_co2 = ref(undefined)
-
 const nombre_refrigerante_elegido = ref()
 
 const refrigerantes = [
@@ -53,32 +52,22 @@ const refrigerantes = [
   { name: 'R-744 (CO2)', value: 0.0 }
 ]
 
-const loading = ref(false)
-
-function resetResultados() {
+function calcularToneladasCO2(kgRef, tipoRef) {
   nombre_refrigerante_elegido.value = undefined
   resultado_co2.value = undefined
-}
 
-async function calcularToneladasCO2(kg_refrigerante, tipo_refrigerante) {
-  resetResultados()
-  loading.value = true
-  await new Promise((r) => setTimeout(r, 1000))
-
-  nombre_refrigerante_elegido.value = tipo_refrigerante.name
-  resultado_co2.value = kg_refrigerante * tipo_refrigerante.value
-
-  loading.value = false
+  nombre_refrigerante_elegido.value = tipoRef.name
+  resultado_co2.value = kgRef * tipoRef.value
 }
 </script>
 
 <template>
-  <div>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-      <Card
-        class="min-h-full flex flex-col"
-        :pt="{ body: { class: 'min-h-full' }, content: { class: 'flex-1' } }"
-      >
+  <CalculatorLayout
+    title="Equivalencias Refrigerantes y CO₂"
+    subtitle="Calcula el impacto en toneladas de CO₂ equivalente"
+  >
+    <template #inputs>
+      <Card class="min-h-full flex flex-col">
         <template #title>Datos iniciales - Kilos y tipo de refrigerante</template>
         <template #content>
           <div class="grid grid-cols-1 gap-3 mt-3">
@@ -92,8 +81,8 @@ async function calcularToneladasCO2(kg_refrigerante, tipo_refrigerante) {
             <InputGroup>
               <FloatLabel variant="on">
                 <Select
-                  v-model="tipo_refrigerante"
                   id="tipo_refrigerante"
+                  v-model="tipo_refrigerante"
                   filter
                   :options="refrigerantes"
                   optionLabel="name"
@@ -109,29 +98,22 @@ async function calcularToneladasCO2(kg_refrigerante, tipo_refrigerante) {
           </div>
         </template>
       </Card>
-      <Card
-        class="min-h-full flex flex-col"
-        :pt="{ body: { class: 'min-h-full' }, content: { class: 'flex-1' } }"
-      >
+    </template>
+    <template #results>
+      <Card class="min-h-full flex flex-col">
         <template #title>Resultado</template>
         <template #content>
-          <ProgressSpinner v-if="loading" class="w-full m-auto min-h-full" />
           <div
             v-if="!isNaN(resultado_co2)"
             class="min-h-full flex flex-col justify-evenly max-w-sm text-center mx-6"
           >
             <p>
-              {{ kg_refrigerante }} kg del refrigerante {{ nombre_refrigerante_elegido }} equivalen
-              a
+              {{ kg_refrigerante }} kg del refrigerante {{ nombre_refrigerante_elegido }} equivalen a
             </p>
-            <p>
-              <b>{{ resultado_co2.toFixed(3) }}</b> toneladas de CO₂
-            </p>
+            <p><b>{{ resultado_co2.toFixed(3) }}</b> toneladas de CO₂</p>
           </div>
         </template>
       </Card>
-    </div>
-  </div>
+    </template>
+  </CalculatorLayout>
 </template>
-
-<style></style>
