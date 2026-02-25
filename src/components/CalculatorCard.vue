@@ -29,6 +29,7 @@ const props = defineProps({
 </template>
 
 <style scoped>
+@reference "../assets/tailwind.css";
 .p-card-body {
   @apply min-h-full;
 }

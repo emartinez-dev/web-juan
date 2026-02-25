@@ -23,7 +23,8 @@ const year = new Date().getFullYear()
     </div>
   </main>
 </template>
-<style #scoped>
+<style>
+@reference "./assets/tailwind.css";
 body {
   @apply h-full min-w-full bg-surface-100 dark:bg-surface-950;
 }
