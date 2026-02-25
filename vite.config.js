@@ -7,5 +7,9 @@ export default defineConfig({
   plugins: [tailwindcss(), vue()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) }
-  }
+  },
+  test: {
+    environment: 'node',
+    include: ['src/**/*.test.js'],
+  },
 })

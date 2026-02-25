@@ -21,36 +21,39 @@ const calculators = [
     url: 'co2'
   },
   {
-    title: 'Conversión de Temperaturas',
-    subtitle: 'De °C, °F y K',
-    description: `Convierte instantáneamente entre grados Celsius, Fahrenheit y Kelvin.
-                  Útil para interpretar datos de equipos con distintas escalas de temperatura.`,
+    title: 'Carga Adicional R-32 — RAC / LCAC',
+    subtitle: 'Carga de gas por longitud de tubería',
+    description: `Calcula la carga adicional de refrigerante R-32 necesaria según la longitud
+                  total de la tubería de líquido instalada, para equipos de las gamas
+                  7,1–16 kW y 2,6–5,2 kW.`,
     imageUrl: '',
-    url: 'conversion-temperatura'
+    url: 'carga-r32-rac'
   },
   {
-    title: 'Conversión de Presiones',
-    subtitle: 'De bar, psi, kPa y MPa',
-    description: `Convierte valores de presión entre las unidades más comunes: bar, psi,
-                  kilopascales y megapascales.`,
+    title: 'Carga Refrigerante VRF R-410A',
+    subtitle: 'Carga adicional por línea de líquido',
+    description: `Calcula la carga adicional de R-410A para sistemas VRF Midea según los
+                  metros de tubería de líquido de cada diámetro instalado.`,
     imageUrl: '',
-    url: 'conversion-presion'
+    url: 'carga-r410-vrf'
   },
   {
-    title: 'Superheat y Subcooling',
-    subtitle: 'Recalentamiento y subenfriamiento',
-    description: `Calcula el superheat (recalentamiento) o el subcooling (subenfriamiento)
-                  del refrigerante a partir de las temperaturas de saturación y real.`,
+    title: 'Carga Adicional VRF R-32',
+    subtitle: 'Tuberías + potencia interior instalada',
+    description: `Calcula la carga adicional de R-32 para sistemas VRF combinando los metros
+                  de tubería de líquido por diámetro y la potencia total de las unidades
+                  interiores instaladas.`,
     imageUrl: '',
-    url: 'superheat-subcooling'
+    url: 'carga-r32-vrf'
   },
   {
-    title: 'Toneladas de Refrigeración',
-    subtitle: 'Potencia frigorífica',
-    description: `Convierte la potencia frigorífica entre kW, BTU/h, kcal/h y toneladas
-                  de refrigeración (TR).`,
+    title: 'Cálculo de Caudal de Agua',
+    subtitle: 'Capacidad de tubería vs demanda del equipo',
+    description: `Calcula el caudal máximo que admite una tubería según su diámetro y
+                  velocidad del agua, y lo compara con el caudal nominal requerido por
+                  el equipo. Indica si la tubería es suficiente.`,
     imageUrl: '',
-    url: 'toneladas-refrigeracion'
+    url: 'caudal-agua'
   }
 ]
 </script>
