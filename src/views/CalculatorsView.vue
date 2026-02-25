@@ -55,10 +55,12 @@ const categories = [
 
 <template>
   <div>
-    <div class="mb-10">
-      <h1 class="text-3xl font-bold text-surface-800 dark:text-surface-50">Calculadoras</h1>
-      <p class="text-surface-500 dark:text-surface-400 mt-2 text-sm">
-        Herramientas de cálculo para técnicos de climatización y refrigeración
+    <div class="mb-6">
+      <h1 class="text-2xl font-bold tracking-tight text-surface-900 dark:text-surface-50">
+        Herramientas de cálculo
+      </h1>
+      <p class="text-surface-500 dark:text-surface-400 mt-1 text-[15px]">
+        Climatización y refrigeración
       </p>
     </div>
 
