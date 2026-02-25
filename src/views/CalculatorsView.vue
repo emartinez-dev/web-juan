@@ -1,81 +1,86 @@
 <script setup>
 import CalculatorCard from '@/components/CalculatorCard.vue'
 
-const calculators = [
+const categories = [
   {
-    title: 'Calculadora Ley Gay-Lussac',
-    subtitle: 'Relación entre presión y temperatura',
-    description: `Esta calculadora se utiliza para resolver problemas relacionados con
-                  la ley de Gay-Lussac, que describe la relación entre la presión y la temperatura
-                  de un gas ideal, manteniendo constante el volumen y la cantidad de gas`,
-    imageUrl: '',
-    url: 'gay-lussac'
+    label: 'Gas Refrigerante',
+    icon: 'pi pi-cloud',
+    calculators: [
+      {
+        title: 'Ley Gay-Lussac',
+        description: 'Presión final de N₂ a partir de temperaturas inicial y final',
+        icon: 'pi pi-gauge',
+        url: 'gay-lussac',
+      },
+      {
+        title: 'Equivalencias Refrigerantes CO₂',
+        description: 'Impacto en toneladas de CO₂ equivalente por tipo de gas',
+        icon: 'pi pi-cloud',
+        url: 'co2',
+      },
+      {
+        title: 'Carga Adicional R-32 — RAC / LCAC',
+        description: 'Gramos de R-32 adicionales según longitud de tubería instalada',
+        icon: 'pi pi-bolt',
+        url: 'carga-r32-rac',
+      },
+      {
+        title: 'Carga Refrigerante VRF R-410A',
+        description: 'Carga adicional de R-410A por diámetro y longitud de tubería',
+        icon: 'pi pi-database',
+        url: 'carga-r410-vrf',
+      },
+      {
+        title: 'Carga Adicional VRF R-32',
+        description: 'R-32 adicional combinando tuberías y potencia de unidades interiores',
+        icon: 'pi pi-sitemap',
+        url: 'carga-r32-vrf',
+      },
+    ],
   },
   {
-    title: 'Equivalencias Refrigerantes y CO₂',
-    subtitle: 'Relación gases refrigerantes - CO₂',
-    description: `Una calculadora de equivalencia de masa entre gases refrigerantes y CO₂ sirve
-                  para comparar el impacto ambiental de diferentes gases refrigerantes en toneladas
-                  de CO₂`,
-    imageUrl: '',
-    url: 'co2'
+    label: 'Hidráulica',
+    icon: 'pi pi-chart-bar',
+    calculators: [
+      {
+        title: 'Cálculo de Caudal de Agua',
+        description: 'Comprueba si la tubería admite el caudal requerido por el equipo',
+        icon: 'pi pi-chart-bar',
+        url: 'caudal-agua',
+      },
+    ],
   },
-  {
-    title: 'Carga Adicional R-32 — RAC / LCAC',
-    subtitle: 'Carga de gas por longitud de tubería',
-    description: `Calcula la carga adicional de refrigerante R-32 necesaria según la longitud
-                  total de la tubería de líquido instalada, para equipos de las gamas
-                  7,1–16 kW y 2,6–5,2 kW.`,
-    imageUrl: '',
-    url: 'carga-r32-rac'
-  },
-  {
-    title: 'Carga Refrigerante VRF R-410A',
-    subtitle: 'Carga adicional por línea de líquido',
-    description: `Calcula la carga adicional de R-410A para sistemas VRF Midea según los
-                  metros de tubería de líquido de cada diámetro instalado.`,
-    imageUrl: '',
-    url: 'carga-r410-vrf'
-  },
-  {
-    title: 'Carga Adicional VRF R-32',
-    subtitle: 'Tuberías + potencia interior instalada',
-    description: `Calcula la carga adicional de R-32 para sistemas VRF combinando los metros
-                  de tubería de líquido por diámetro y la potencia total de las unidades
-                  interiores instaladas.`,
-    imageUrl: '',
-    url: 'carga-r32-vrf'
-  },
-  {
-    title: 'Cálculo de Caudal de Agua',
-    subtitle: 'Capacidad de tubería vs demanda del equipo',
-    description: `Calcula el caudal máximo que admite una tubería según su diámetro y
-                  velocidad del agua, y lo compara con el caudal nominal requerido por
-                  el equipo. Indica si la tubería es suficiente.`,
-    imageUrl: '',
-    url: 'caudal-agua'
-  }
 ]
 </script>
 
 <template>
   <div>
-    <div class="mb-8">
+    <div class="mb-10">
       <h1 class="text-3xl font-bold text-surface-800 dark:text-surface-50">Calculadoras</h1>
-      <p class="text-surface-500 mt-2">
+      <p class="text-surface-500 dark:text-surface-400 mt-2 text-sm">
         Herramientas de cálculo para técnicos de climatización y refrigeración
       </p>
     </div>
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <CalculatorCard
-        v-for="calc in calculators"
-        :key="calc.title"
-        :title="calc.title"
-        :subtitle="calc.subtitle"
-        :description="calc.description"
-        :image-url="calc.imageUrl"
-        :url="calc.url"
-      />
+
+    <div class="flex flex-col gap-10">
+      <section v-for="cat in categories" :key="cat.label">
+        <div class="flex items-center gap-2 mb-4">
+          <i :class="cat.icon" class="text-primary-600 dark:text-primary-400" />
+          <h2 class="text-sm font-semibold uppercase tracking-widest text-surface-500 dark:text-surface-400">
+            {{ cat.label }}
+          </h2>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <CalculatorCard
+            v-for="calc in cat.calculators"
+            :key="calc.url"
+            :title="calc.title"
+            :description="calc.description"
+            :icon="calc.icon"
+            :url="calc.url"
+          />
+        </div>
+      </section>
     </div>
   </div>
 </template>
