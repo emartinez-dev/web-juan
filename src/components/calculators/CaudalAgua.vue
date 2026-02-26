@@ -37,7 +37,7 @@ const check = computed(() => {
 
 <template>
   <CalculatorLayout
-    title="Cálculo de Caudal de Agua en Tuberías"
+    title="Cálculo de Caudal de Agua"
     subtitle="Comprueba si el diámetro de tubería es suficiente para la demanda del equipo"
   >
     <template #inputs>

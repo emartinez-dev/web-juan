@@ -13,7 +13,7 @@ const categories = [
         url: 'gay-lussac',
       },
       {
-        title: 'Equivalencias Refrigerantes CO₂',
+        title: 'Equivalencias Refrigerantes y CO₂',
         description: 'Impacto en toneladas de CO₂ equivalente por tipo de gas',
         icon: 'pi pi-cloud',
         url: 'co2',
