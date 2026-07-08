@@ -26,7 +26,7 @@ const systemType = ref('V6')
 const metersMap = ref(Object.fromEntries(PIPE_LINES.map((l) => [l.key, undefined])))
 
 // V8 HP
-const hpOptions = V8_HP_CHARGE.map((e) => ({ label: `${e.hp} HP`, value: e.hp }))
+const hpOptions = V8_HP_CHARGE.map((e) => ({ label: `${e.hp} HP (${(e.hp * 2.8).toFixed(1)} kW)`, value: e.hp }))
 const selectedHp = ref(null)
 
 // V6R MS box counts
@@ -211,7 +211,7 @@ const result = computed(() => {
             <div v-if="result.type === 'V8'">
               <h4 class="text-sm font-semibold text-surface-500 mb-2 uppercase tracking-wide">Carga por HP</h4>
               <div class="flex justify-between items-center py-2 border-b border-surface-100 dark:border-surface-800 text-sm">
-                <span>{{ selectedHp != null ? selectedHp + ' HP' : 'No seleccionado' }}</span>
+                <span>{{ selectedHp != null ? `${selectedHp} HP (${(selectedHp * 2.8).toFixed(1)} kW)` : 'No seleccionado' }}</span>
                 <span class="font-semibold">{{ result.hpKg.toFixed(1) }} kg</span>
               </div>
             </div>
